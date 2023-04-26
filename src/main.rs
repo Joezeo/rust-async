@@ -1,3 +1,5 @@
+mod timer_future;
+
 use futures::executor::block_on;
 
 struct Song {}
