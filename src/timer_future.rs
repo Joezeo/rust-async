@@ -141,6 +141,7 @@ fn main() {
 
     spawner.spawn(async {
         TimerFuture::new(Duration::from_secs(3)).await;
+        println!("[{:?}] Doing next", thread::current().id());
     });
 
     drop(spawner);
