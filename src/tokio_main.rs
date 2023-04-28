@@ -5,6 +5,15 @@ use tokio::runtime::{Builder, Runtime};
 
 use crate::async_task::{tm_async, AsyncTask};
 
+pub trait AsAny {
+    fn as_any(self: Box<Self>) -> Box<dyn Any>;
+}
+impl <T: 'static> AsAny for T {
+    fn as_any(self: Box<Self>) -> Box<dyn Any> {
+        self
+    }
+}
+
 #[test]
 fn main() {
     let runtime = tokio_runtime();
@@ -13,7 +22,7 @@ fn main() {
     let num_clone = num.clone();
     let _guard = runtime.enter();
 
-    let task = tm_async(async move {
+    let task: AsyncTask<i32> = tm_async(async move {
         println!("[{:?}] Hello async task", thread::current().id());
         64
     })
